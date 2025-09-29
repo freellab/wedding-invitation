@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Cinzel:wght@400..900&family=WindSong:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root{
+      --nav-h: 64px;
+      --glass-bg: rgba(255,255,255,0.14);
+      --glass-brd: rgba(255,255,255,0.22);
+      --slide-gap: 20px; /* must match margin below */
+    }
+
+    html, body { height: 100%; }
+
+    #glitter {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* di belakang konten */
+        pointer-events: none;
+        }
+        header, section, nav, footer {
+        position: relative;
+        z-index: 1;
+        }
+
+
+    body {
+      margin: 0 auto;
+      font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #ededed;
+      background: #121212;
+      font-weight: 300;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3 {
+      font-family: 'WindSong', cursive;
+      font-weight: 300;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    p {
+      line-height: 1.7;
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    /* ===== NAV (glass / acrylic) ===== */
+    .nav {
+      position: fixed;
+      width: 100%;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 20px;
+      padding: 10px 10%;
+      z-index: 50;
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border-bottom: 1px solid var(--glass-brd);
+    }
+    .brand{ position: absolute; left: 10%; font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 2px; color:#fff; text-transform: uppercase; }
+
+    .nav-links { display:flex; gap:28px; align-items:center;
+    width: 100%; max-width: 600px; justify-content: center; }
+
+    .nav a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: opacity .25s ease;
+      font-size: 10px;
+      white-space: nowrap;
+      opacity: .9;
+    }
+    .nav a:hover { opacity: 1; }
+
+    /* Hamburger */
+    .hamburger {
+         display:none; 
+         position:absolute; 
+         right:5%; width:36px; 
+         height:36px;
+         align-items:center; 
+         justify-content:center; 
+         cursor:pointer;
+         background: none;
+         border: none;
+         border-radius:0;
+    }
+    .hamburger span{ display:block; width:18px; height:1px;background:#fff; border-radius:2px; position:relative; transition:transform .3s ease, opacity .2s ease; }
+    .hamburger span::before, .hamburger span::after{ content:""; position:absolute; left:0; width:18px; height:1px; background:#fff; border-radius:2px; transition:transform .3s ease, top .3s ease, opacity .2s ease; }
+    .hamburger span::before{ top:-6px; }
+    .hamburger span::after{ top:6px; }
+    .hamburger.open span{ opacity:0; }
+    .hamburger.open span::before{ top:0; transform:rotate(45deg); }
+    .hamburger.open span::after{ top:0; transform:rotate(-45deg); }
+
+    /* Mobile menu panel */
+    .mobile-panel   {
+        width: 100%;
+         display:none;
+         position:fixed;
+         top:var(--nav-h);
+         border:1px solid var(--glass-brd);
+         background: rgba(236, 236, 236, 0.233);
+         backdrop-filter: blur(18px) saturate(180%);
+         -webkit-backdrop-filter: blur(18px) saturate(180%);
+          padding:10px;
+          z-index:40; }
+    .mobile-panel a{
+        display:block;
+        padding:12px 10px;
+        text-align:center;
+        border-radius:10px;
+        text-decoration:none;
+        color:#fff;
+        font-weight:300;
+        text-transform:uppercase;
+        letter-spacing:2px;
+        font-size:12px;
+        margin:6px 0;
+        transition: background .25s ease;   }
+    .mobile-panel a:hover{ background: rgba(73, 73, 73, 0.226); }
+
+    @media (max-width: 768px){
+      .nav{ justify-content:center; }
+      .nav-links{ display:none; }
+      .hamburger{ display:flex; }
+      .mobile-panel.open{ display:block; }
+    }
+
+    header {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    header .overlay { position:absolute; inset:0; background: rgba(0,0,0,0.42); }
+
+    header .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      color: #fff;
+      text-align: center;
+      padding: 0 18px;
+    }
+    header h1 { font-size: clamp(40px, 6vw, 72px); font-family:'WindSong', cursive; font-weight:300; margin:0; }
+    header p { font-size: 12px; margin-top: 10px; }
+    header .date { font-size: 20px; margin-top: 6px; font-weight: 400; text-transform: uppercase; letter-spacing: 3px; }
+
+    section { padding: 80px 20px; text-align: center; }
+    section h2 { margin-bottom: 16px; font-size: clamp(28px, 4vw, 42px); }
+
+    /* anchor offset */
+    section, header { scroll-margin-top: calc(var(--nav-h) + 14px); }
+
+    .map iframe { border: 0; width: 100%; max-width: 640px; height: 320px; border-radius: 12px; }
+
+    .schedule, .about { max-width: 760px; margin: 0 auto; }
+    .schedule p, .about p { margin: 10px 0; }
+
+    /* ===== Carousel Gallery with preview ===== */
+    .gallery { max-width: 960px; margin: 0 auto; }
+    .carousel { position: relative; overflow: hidden; border-radius: 14px; padding: 0 0; }
+    .carousel .track { display: flex; transition: transform .6s ease; will-change: transform; }
+    .carousel .slide { flex: 0 0 80%; margin: 0 10px; border-radius: 12px; overflow:hidden; height: 260px; }
+    .carousel img { width: 100%; height: 100%; object-fit: cover; display:block; }
+    .carousel .dots { display:flex; gap:8px; justify-content:center; margin-top:12px; }
+    .carousel .dot { width:6px; height:6px; border-radius:50%; background:#666; opacity:.6; }
+    .carousel .dot.active { background:#fff; opacity:1; }
+
+    @media(min-width:768px){ .carousel .slide{ height: 380px; } }
+    @media(max-width:767px){ .carousel .slide{ flex: 0 0 90%; } }
+
+    form { max-width: 640px; margin: 24px auto; display: flex; flex-direction: column; gap: 12px; }
+    input, textarea, button { padding: 12px 14px; border: 1px solid #3a3a3a; border-radius: 8px; color:#fff; background:#1b1b1b; }
+    textarea{ resize: vertical; }
+    .submit-btn { background: #e64a4a; color: #fff; cursor: pointer; border: none; transition: filter 0.25s; }
+    .submit-btn:hover { filter: brightness(1.1); }
+  </style>
+</head>
+<body>
+    <canvas id="glitter"></canvas>
+  <nav class="nav" aria-label="Primary">
+    <div class="brand">A&J Wedding</div>
+    <div class="nav-links" aria-hidden="false">
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#schedule">Wedding Schedule</a>
+      <a href="#map">Location</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#wishes">Wishes</a>
+    </div>
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span>
+    </button>
+  </nav>
+
+  <div id="mobileMenu" class="mobile-panel" role="dialog" aria-modal="true" aria-labelledby="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#schedule">Wedding Schedule</a>
+    <a href="#map">Location</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#wishes">Wishes</a>
+  </div>
+
+  <header id="home">
+    <video autoplay muted loop>
+      <source src="media/white-gown-1.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content">
+      <h1>Amelia & John</h1>
+      <p>“With hearts entwined, we invite you to witness our journey into forever.”</p>
+      <p class="date">Dec 12, 2025</p>
+    </div>
+  </header>
+
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <p>“Fate brought us together in the most ordinary of moments, yet it was in those simple beginnings that something extraordinary was born. Through countless days filled with laughter, shared dreams, and quiet prayers, our journey has grown into a story of love and devotion. Now, as we step into a new chapter, we are grateful to share this moment with the people who have always been part of our lives.”</p>
+  </section>
+
+  <section id="schedule" class="schedule">
+    <h2>Wedding Schedule</h2>
+    <p>“With hearts full of joy, we invite you to witness and celebrate the most meaningful day of our lives.</p>
+    <ul>
+      <li><p>Solemnization Ceremony: 09.00 AM – the sacred union where our vows will be spoken.</p></li>
+      <li><p>Reception: 11.00 AM – 02.00 PM – a celebration of love, surrounded by the warmth of family and friends.</p></li>
+    </ul>
+  </section>
+
+  <section id="map" class="map">
+    <h2>Location</h2>
+    <p>Please join us for our special day at:<br><br>
+
+        <strong>Graha Satria Ballroom</strong><br>
+        Jl. Jenderal Sudirman No. 123,<br>
+        Pati Regency, Central Java, Indonesia.
+        <br><br>
+
+        The venue is located in the heart of the city, easy to reach and surrounded by familiar landmarks. We look forward to welcoming you there.
+    <br><br><br></p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.059580588984!2d110.3694897153315!3d-7.801389694376642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a5790f5e6f6e5%3A0x3027a76e352bb20!2sYogyakarta!5e0!3m2!1sen!2sid!4v1638425297452!5m2!1sen!2sid" allowfullscreen="" loading="lazy"></iframe>
+  </section>
+
+  <section id="gallery" class="gallery">
+    <h2>Gallery</h2>
+    <div class="carousel" aria-roledescription="carousel">
+      <div class="track">
+        <div class="slide"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop" alt="Holding hands"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1600&auto=format&fit=crop" alt="Bride with bouquet"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1600&auto=format&fit=crop" alt="Wedding rings"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop" alt="Wedding cake"></div>
+        <div class="slide"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="Sunset couple"></div>
+      </div>
+      <div class="dots" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section id="wishes" class="wishes">
+    <h2>Wishes Form</h2>
+    <form>
+      <input type="text" placeholder="Name" required>
+      <textarea placeholder="Write your wishes..." rows="4" required></textarea>
+      <button class="submit-btn" type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer style="text-align:center; color:#aaa; font-size:12px; padding:32px 0 18px 0;">
+    All right Reserved by @MatiasAustin2025
+  </footer>
+
+  <script>
+    // ===== mobile nav =====
+    const hamburger = document.querySelector('.hamburger');
+    const panel = document.getElementById('mobileMenu');
+    const body = document.body;
+    function closeMenu(){ hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded','false'); panel.classList.remove('open'); body.style.overflow=''; }
+    function openMenu(){ hamburger.classList.add('open'); hamburger.setAttribute('aria-expanded','true'); panel.classList.add('open'); body.style.overflow='hidden'; }
+    hamburger.addEventListener('click', ()=>{ const isOpen = hamburger.classList.contains('open'); isOpen ? closeMenu() : openMenu(); });
+    panel.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMenu));
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+
+    // ===== Carousel with preview (center active, show peeks) =====
+    const container = document.querySelector('.carousel');
+    const track = document.querySelector('.carousel .track');
+    const slides = Array.from(document.querySelectorAll('.carousel .slide'));
+    const dotsWrap = document.querySelector('.carousel .dots');
+
+    let index = 0, timer;
+
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i)=>{
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===index ? ' active' : '');
+        d.addEventListener('click', ()=>{ go(i); restartAutoplay(); });
+        dotsWrap.appendChild(d);
+      });
+    }
+
+    function updateDots(){
+      dotsWrap.querySelectorAll('.dot').forEach((d,i)=>{
+        d.classList.toggle('active', i===index);
+      });
+    }
+
+    function centeredOffset(){
+      const slideW = slides[0].getBoundingClientRect().width + parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slide-gap'));
+      const contW = container.clientWidth;
+      const offset = index * slideW - (contW - slideW) / 2; // center active slide
+      return Math.max(0, offset); // clamp so first slide doesn't overshoot right
+    }
+
+    function go(to){
+      index = (to + slides.length) % slides.length;
+      const x = centeredOffset();
+      track.style.transform = `translateX(-${x}px)`;
+      updateDots();
+    }
+
+    function autoplay(){ timer = setInterval(()=> go(index+1), 3000); }
+    function stopAutoplay(){ clearInterval(timer); }
+    function restartAutoplay(){ stopAutoplay(); autoplay(); }
+
+    // pause on hover (desktop)
+    container.addEventListener('mouseenter', stopAutoplay);
+    container.addEventListener('mouseleave', restartAutoplay);
+
+    // swipe support
+    let startX = 0;
+    container.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; stopAutoplay(); }, {passive:true});
+    container.addEventListener('touchend', (e)=>{ const dx = e.changedTouches[0].clientX - startX; if(Math.abs(dx) > 40){ dx<0 ? go(index+1) : go(index-1); } restartAutoplay(); });
+
+    // handle resize to keep centering
+    window.addEventListener('resize', ()=>{ track.style.transition = 'none'; go(index); requestAnimationFrame(()=> track.style.transition = 'transform .6s ease'); });
+
+    // init
+    track.style.transition = 'none';
+    buildDots();
+    go(0);
+    requestAnimationFrame(()=>{ track.style.transition = 'transform .6s ease'; autoplay(); });
+
+    // ===== Glitter background =====
+    const canvas = document.getElementById('glitter');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+
+    function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function initParticles(){
+    particles = [];
+    for(let i=0; i<80; i++){
+        particles.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*2 + 0.5,
+        dx: (Math.random()-0.5)*0.3,
+        dy: (Math.random()-0.5)*0.3,
+        alpha: Math.random()
+        });
+    }
+    }
+    initParticles();
+
+    function animate(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha += (Math.random()-0.5)*0.05;
+        if(p.alpha<0) p.alpha=0; if(p.alpha>1) p.alpha=1;
+        if(p.x<0||p.x>w) p.dx*=-1;
+        if(p.y<0||p.y>h) p.dy*=-1;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,200,${p.alpha})`;
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+    });
+    requestAnimationFrame(animate);
+    }
+    animate();
+
+  </script>
+</body>
+</html>
