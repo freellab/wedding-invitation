@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liam & Sofia — Coastal Cinematic (Light)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf8;          /* light base */
+    --ink:#232523;         /* main text */
+    --muted:#6d6f6d;       /* secondary */
+    --accent:#88a98f;      /* sage */
+    --glass:rgba(255,255,255,.7);
+    --line:#e6e6e2;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.7}
+  a{text-decoration:none;color:inherit}
+
+  /* NAV (glass / acrylic) */
+  .nav{
+    position:sticky; top:0; z-index:40;
+    background:var(--glass); backdrop-filter:blur(10px) saturate(140%);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:10px}
+  .brand{font-family:Fraunces,serif;font-weight:600;letter-spacing:.4px}
+  .links{display:flex;gap:18px;align-items:center}
+  .links a{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#2f332f;opacity:.9}
+  .hamb{display:none; width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:#fff}
+  .hamb span{display:block;width:18px;height:2px;background:#232523;position:relative}
+  .hamb span::before,.hamb span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:#232523}
+  .hamb span::before{top:-6px}.hamb span::after{top:6px}
+
+  /* Mobile menu panel */
+  .panel{display:none; border-top:1px solid var(--line); background:#fffffff2; backdrop-filter:blur(8px)}
+  .panel a{display:block;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13px;letter-spacing:1.6px;text-transform:uppercase}
+  .panel.open{display:block}
+
+  @media (max-width:760px){
+    .links{display:none}
+    .hamb{display:flex}
+  }
+
+  /* HERO (video) */
+  header{position:relative;height:92vh;min-height:520px;overflow:hidden;border-bottom:1px solid var(--line)}
+  header video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.03) saturate(1.05)}
+  .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.55))} /* light veil */
+  .hero-txt{
+    position:absolute; bottom:10vh; left:6vw; right:6vw; max-width:760px;
+    background:rgba(255, 255, 255, 0.226); backdrop-filter:blur(8px);
+    border:1px solid var(--line); border-radius:16px; padding:16px 18px;
+  }
+  .names{font-family:Fraunces,serif;font-weight:600;font-size:clamp(28px,6vw,48px);margin:0}
+  .tag{color:var(--muted);font-size:14px;margin-top:4px}
+  .date{letter-spacing:3px;font-size:12px;text-transform:uppercase;margin-top:2px;color:#4b4f4b}
+
+  /* SECTIONS */
+  section{padding:64px 18px;scroll-margin-top:70px}
+  .wrap{max-width:900px;margin:0 auto}
+  h2{font-family:Fraunces,serif;font-weight:600;font-size:28px;margin:0 0 10px}
+  p{margin:0 0 12px}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+
+  .schedule{display:grid;gap:12px}
+  .slot{border:1px dashed var(--line);border-radius:12px;padding:14px;background:#fff}
+
+  .map iframe{width:100%;height:340px;border:0;border-radius:14px}
+
+  .grid{columns:2;column-gap:10px}
+  @media(min-width:720px){.grid{columns:3}}
+  .grid img{width:100%;break-inside:avoid;margin:0 0 10px;border-radius:12px;display:block}
+
+  form{display:grid;gap:10px;max-width:640px}
+  input,textarea,button{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit}
+  textarea{resize:vertical}
+  button{background:var(--accent);color:#0a0d0b;border-color:transparent;font-weight:700;cursor:pointer}
+
+  footer{border-top:1px solid var(--line);color:#7b817d;font-size:12px;text-align:center;padding:28px 0;margin-top:40px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <div class="brand">Liam & Sofia</div>
+    <div class="links" role="menubar">
+      <a href="#story" role="menuitem">Story</a>
+      <a href="#schedule" role="menuitem">Schedule</a>
+      <a href="#location" role="menuitem">Location</a>
+      <a href="#gallery" role="menuitem">Gallery</a>
+      <a href="#wishes" role="menuitem">Wishes</a>
+    </div>
+    <button class="hamb" aria-label="Open menu" aria-controls="mPanel" aria-expanded="false">
+      <span></span>
+    </button>
+  </div>
+  <div id="mPanel" class="panel" role="dialog" aria-modal="true">
+    <a href="#story">Story</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#location">Location</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#wishes">Wishes</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="home" aria-label="Cinematic cover">
+  <video autoplay muted loop playsinline>
+    <!-- ganti ke file lokal jika perlu: ../media/namafile.mp4 -->
+    <source src="/media/calestial-wedding.mp4" type="video/mp4">
+  </video>
+  <div class="veil"></div>
+  <div class="hero-txt">
+    <h1 class="names">Liam & Sofia</h1>
+    <p class="tag">“Two paths, one horizon.”</p>
+    <p class="date">June 07, 2026 · Uluwatu</p>
+  </div>
+</header>
+
+<!-- STORY -->
+<section id="story">
+  <div class="wrap">
+    <h2>Our Story</h2>
+    <div class="card">
+      <p>They first spoke under a café awning while the city shook off the rain. What followed was a season of small miracles—shared books, missed trains, and a growing ease that felt like finding home.</p>
+      <p class="tag" style="color:var(--muted)">Now they choose, deliberately and joyfully, to keep building that home—brick by brick, day by day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="wrap">
+    <h2>Schedule</h2>
+    <div class="schedule">
+      <div class="slot">
+        <b>Ceremony — 10:00 AM</b>
+        Ocean lawn, vows beneath the palms, a string quartet in soft daylight.
+      </div>
+      <div class="slot">
+        <b>Reception — 12:30–3:30 PM</b>
+        Lunch & laughter, barefoot dancing, and toasts to close the afternoon.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="wrap">
+    <h2>Location</h2>
+    <p><b>The Glass House, Uluwatu</b><br>Jalan Raya Uluwatu, Bali, Indonesia</p>
+    <p style="color:var(--muted)">Cliffside views and warm tropical light—easy access and parking on site.</p>
+    <div class="map" style="margin-top:12px">
+      <iframe loading="lazy" allowfullscreen
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.535188!2d115.086!3d-8.829!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd25c0e%3A0x0!2sUluwatu!5e0!3m2!1sen!2sid!4v1700000000000">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="wrap">
+    <h2>Gallery</h2>
+    <div class="grid">
+      <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1200&auto=format&fit=crop" alt="Rings">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Sunset">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Bouquet">
+      <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop" alt="Hands">
+      <img src="https://images.unsplash.com/photo-1520975922323-0f8f4cbf8c4b?q=80&w=1200&auto=format&fit=crop" alt="Greenery">
+      <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1200&auto=format&fit=crop" alt="Bride">
+    </div>
+  </div>
+</section>
+
+<!-- WISHES -->
+<section id="wishes">
+  <div class="wrap">
+    <h2>Leave a Wish</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <textarea rows="4" placeholder="Write your blessings for Liam & Sofia…" required></textarea>
+      <button type="submit">Send Wish</button>
+    </form>
+  </div>
+</section>
+
+<footer>All Right Reserved by @Freellab2025</footer>
+
+<script>
+  // Mobile hamburger
+  const hamb = document.querySelector('.hamb');
+  const panel = document.getElementById('mPanel');
+  const toggle = () => {
+    const open = panel.classList.toggle('open');
+    hamb.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  hamb.addEventListener('click', toggle);
+  panel.querySelectorAll('a').forEach(a => a.addEventListener('click', toggle));
+  window.addEventListener('keydown', e => { if(e.key === 'Escape' && panel.classList.contains('open')) toggle(); });
+</script>
+</body>
+</html>
