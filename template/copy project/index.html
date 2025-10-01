@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ava & Mateo — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <img src="https://images.squarespace-cdn.com/content/v1/685767e43d35ed5d7f92de38/a6edc558-d354-49e8-9159-75adf166c274/Bobbi+%2B+Jayden+Video+Graphics-16.png?format=1500w" alt="">
+      </div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="details.html">Details</a>
+        <a href="rsvp.html">RSVP</a>
+      </div>
+      <button class="hamb" aria-label="Open menu" aria-controls="mPanel" aria-expanded="false"><span></span></button>
+    </div>
+    <div id="mPanel" class="panel">
+      <button class="close-btn" aria-label="Close menu" aria-controls="mPanel">&times;</button>
+      <a href="index.html">Home</a>
+      <a href="details.html">Details</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+  </nav>
+
+  <header>
+    <video autoplay muted loop playsinline>
+      <source src="../../media/dark-wine.mp4" type="video/mp4">
+    </video>
+    <div class="veil"></div>
+    <!-- <div class="hero-txt">
+      <h1 class="names">Ava & Mateo</h1>
+      <p class="tag">Not a tradition—our tradition. Food, music, and the people we love.</p>
+      <p class="date">Saturday · 18 April 2026 · Bandung</p>
+    </div> -->
+  </header>
+
+  <section class="simple" style="text-align: center; margin-top: 60px; background-image: url(https://images.squarespace-cdn.com/content/v1/685767e43d35ed5d7f92de38/eb16a02d-30c9-474f-8f53-db1228e7144f/Bobbi+%2B+Jayden+Video+Graphics+Enlarged-07.png?format=750w); background-size: contain; background-repeat: no-repeat; background-position: center;"> 
+      <h4>NOT QUITE TRADITIONAL. A NIGHT BUILT ON THREE CULTURES, HELD TOGETHER BY FOOD, MUSIC, AND THE PEOPLE WE LOVE.</h4>
+      <h1>JAYDEN — BOBBI<br>TOGETHER WITH THEIR FAMILIES INVITE YOU TO CELEBRATE NEW TRADITIONS.</h1>
+      <h4>MORE LOVE.<br>MORE EVERYTHING.</h4>
+      <a class="btn" href="details.html" style="margin-bottom: 20px;">See Details</a>
+      <a class="btn" style="color:#fff;margin-left:8px" href="rsvp.html">RSVP</a>
+  </section>
+
+  <footer>All Right Reserved by @Freellab2025</footer>
+
+  <script>
+    const hamb = document.querySelector('.hamb');
+    const panel = document.getElementById('mPanel');
+    function toggle(){
+      const open = panel.classList.toggle('open');
+      hamb.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden':'';
+    }
+    hamb.addEventListener('click', toggle);
+    panel.querySelectorAll('a').forEach(a=>a.addEventListener('click', toggle));
+    window.addEventListener('keydown', e=>{ if(e.key==='Escape' && panel.classList.contains('open')) toggle(); });
+
+    // Dapatkan tombol close
+    const closeBtn = document.querySelector('.close-btn');
+    // Close menu kalau tombol X diklik
+    closeBtn.addEventListener('click', () => {
+    panel.classList.remove('open');
+    });
+  </script>
+
+  <script src="nav-menu.js"></script>
+</body>
+</html>
